@@ -1,9 +1,12 @@
-const {app, BrowserWindow, ipcMain} = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
-function createWindow () {
+function createWindow() {
+
   const mainWindow = new BrowserWindow({
     webPreferences: {
+      nodeIntegration: true,
+      nodeIntegrationInWorker: true,
       preload: path.join(__dirname, 'preload.js')
     }
   })
@@ -32,6 +35,8 @@ function createWindow () {
     }
 
     const converted = amount * rates[to_curr] / rates[from_curr]
+    // send converted value to renderer.js
+    win.webContents.send('converted', converted)
   })
 
   mainWindow.webContents.openDevTools()
@@ -40,7 +45,7 @@ function createWindow () {
 
 app.whenReady().then(() => {
   createWindow()
-  
+
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
