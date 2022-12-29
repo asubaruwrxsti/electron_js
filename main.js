@@ -30,7 +30,7 @@ function createWindow() {
 
     const rates = {
       USD: 1,
-      EUR: 0.9,
+      EUR: 0.78,
       GBP: 0.8
     }
 

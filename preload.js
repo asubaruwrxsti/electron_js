@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron')
-
+// Expose protected methods that allow the renderer process to use
 contextBridge.exposeInMainWorld('electronAPI', {
     setTitle: (title) => ipcRenderer.send('set-title', title),
     getTitle: () => ipcRenderer.send('get-title'),
